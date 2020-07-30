@@ -44,7 +44,9 @@ extension NetworKit {
     public final class func initNetworkStatus(callback: ((_ status:NWPath.Status) -> ())? = nil) {
         NetworKit.shared.monitor.pathUpdateHandler = { path in
             NetworKit._path = path
-            callback?(path.status)
+            DispatchQueue.main.async {
+                callback?(path.status)
+            }
         }
         
         let queue = DispatchQueue(label: "Monitor")
